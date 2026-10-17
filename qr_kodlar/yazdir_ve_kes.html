@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yıldönümü QR Bulmacası - 3 Parça Kesim & Yazdırma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d090f;
+      --card-bg: rgba(25, 18, 27, 0.75);
+      --border: rgba(255, 182, 193, 0.2);
+      --primary: #f43f5e;
+      --accent: #fb7185;
+      --gold: #fcd34d;
+      --text: #fce7f3;
+      --text-muted: #fda4af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 10%, #2e1122 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      background: linear-gradient(135deg, #fff 30%, #fbcfe8 70%, #fda4af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+
+    p.subtitle {
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .target-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px dashed rgba(244, 63, 94, 0.4);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .target-link:hover {
+      background: rgba(244, 63, 94, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      color: white;
+      box-shadow: 0 4px 20px rgba(225, 29, 72, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(225, 29, 72, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Interactive Simulator */
+    .simulator-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .simulator-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .simulator-desc {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .puzzle-wrapper {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 18px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+
+    .qr-piece {
+      display: block;
+      width: 320px;
+      height: 106.66px;
+      object-fit: cover;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    /* Splitting states */
+    .puzzle-wrapper.separated .qr-piece:nth-child(1) {
+      transform: translateY(-20px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .puzzle-wrapper.separated .qr-piece:nth-child(2) {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .puzzle-wrapper.separated .qr-piece:nth-child(3) {
+      transform: translateY(20px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .puzzle-wrapper.joined .qr-piece {
+      transform: translateY(0);
+      margin: 0;
+      box-shadow: none;
+    }
+
+    .scan-tip {
+      font-size: 0.9rem;
+      color: var(--gold);
+      background: rgba(252, 211, 77, 0.1);
+      border: 1px solid rgba(252, 211, 77, 0.25);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    /* Grids of assets */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin: 2.5rem 0 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #ffe4e6;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .asset-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .asset-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(244, 63, 94, 0.4);
+    }
+
+    .asset-card img {
+      width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      background: white;
+      border-radius: 8px;
+      padding: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .asset-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      color: #fff;
+    }
+
+    .asset-desc {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 1rem;
+    }
+
+    .asset-link {
+      margin-top: auto;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .asset-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Scenario / Ideas */
+    .ideas-box {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), rgba(251, 113, 133, 0.03));
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .ideas-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .idea-step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .idea-num {
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .idea-text strong {
+      color: #fff;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .idea-text p {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Print Specific Styles */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+      }
+
+      .no-print, header, .simulator-card, .action-bar, .section-heading, .grid-3, .ideas-box {
+        display: none !important;
+      }
+
+      .print-only {
+        display: block !important;
+      }
+
+      .print-page {
+        page-break-inside: avoid;
+        padding: 1.5cm;
+        text-align: center;
+      }
+
+      .print-page h2 {
+        font-size: 24pt;
+        color: #881337;
+        margin-bottom: 8pt;
+      }
+
+      .print-page p {
+        font-size: 11pt;
+        color: #4b5563;
+        margin-bottom: 20pt;
+      }
+
+      .print-piece-box {
+        margin: 25pt auto;
+        position: relative;
+        text-align: center;
+      }
+
+      .print-piece-box img {
+        width: 14cm;
+        display: block;
+        margin: 0 auto;
+        border: 1px solid #333;
+      }
+
+      .cut-line {
+        border-top: 2px dashed #e11d48;
+        width: 16cm;
+        margin: 12pt auto;
+        display: flex;
+        justify-content: space-between;
+        font-size: 9pt;
+        color: #e11d48;
+        padding-top: 4pt;
+      }
+    }
+
+    .print-only {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">🎁 İnteraktif Yıldönümü Sürprizi</div>
+      <h1>QR Kod 3 Parçaya Bölündü</h1>
+      <p class="subtitle">Bu QR kod, özel yıldönümü web sitenize yönlendirir. Parçalar tek başlarına okunamaz; sevgiliniz 3 parçayı bir araya getirdiğinde telefonunun kamerasıyla açabilir!</p>
+      
+      <a href="https://yildonumu-iota.vercel.app/" target="_blank" class="target-link">
+        🔗 Hedef Site: https://yildonumu-iota.vercel.app/ ↗
+      </a>
+
+      <div class="action-bar no-print">
+        <button class="btn btn-primary" onclick="window.print()">
+          🖨️ A4 Baskı Al (Yazdır)
+        </button>
+        <a href="A4_yazdirilabilir_sayfa.png" download class="btn btn-secondary">
+          📄 A4 Şablon Görselini İndir
+        </a>
+        <a href="qr_tam.png" download class="btn btn-secondary">
+          ⬛ Tam QR Kodu İndir
+        </a>
+      </div>
+    </header>
+
+    <!-- Bulmaca Canlı Test & Simülatör -->
+    <div class="simulator-card no-print">
+      <h2 class="simulator-title">🧩 Parça Birleştirme Simülatörü</h2>
+      <p class="simulator-desc">Aşağıdaki butona basarak parçaların nasıl ayrıldığını ve birleştiğini görebilirsiniz. Birleşik haldeyken telefonunuzun kamerasını ekrana tutarak test edin!</p>
+
+      <div id="puzzleWrapper" class="puzzle-wrapper separated">
+        <img src="yatay_parcalar/1_ust_parca.png" alt="1. Parça (Üst)" class="qr-piece">
+        <img src="yatay_parcalar/2_orta_parca.png" alt="2. Parça (Orta)" class="qr-piece">
+        <img src="yatay_parcalar/3_alt_parca.png" alt="3. Parça (Alt)" class="qr-piece">
+      </div>
+
+      <div>
+        <button id="toggleBtn" class="btn btn-primary" style="margin-bottom: 1rem;" onclick="togglePuzzle()">
+          ✨ Parçaları Birleştir (Test Et)
+        </button>
+      </div>
+
+      <div class="scan-tip" id="scanTip">
+        💡 İpucu: Şu an parçalar ayrık. "Parçaları Birleştir" butonuna tıkladığınızda QR kod tamamlanır ve telefonunuzla hemen tarayabilirsiniz!
+      </div>
+    </div>
+
+    <!-- Yatay Parçalar Bölümü -->
+    <h3 class="section-heading no-print">✂️ Yatay 3 Parça (Üst, Orta, Alt)</h3>
+    <div class="grid-3 no-print">
+      <div class="asset-card">
+        <img src="yatay_parcalar/1_ust_parca.png" alt="1. Parça">
+        <div class="asset-title">1. Parça (Üst)</div>
+        <div class="asset-desc">Üst konumlandırma desenlerini barındırır.</div>
+        <a href="yatay_parcalar/1_ust_parca.png" download class="asset-link">⬇️ İndir (PNG)</a>
+      </div>
+
+      <div class="asset-card">
+        <img src="yatay_parcalar/2_orta_parca.png" alt="2. Parça">
+        <div class="asset-title">2. Parça (Orta)</div>
+        <div class="asset-desc">Merkez veri ve kodlama şifrelemesini barındırır.</div>
+        <a href="yatay_parcalar/2_orta_parca.png" download class="asset-link">⬇️ İndir (PNG)</a>
+      </div>
+
+      <div class="asset-card">
+        <img src="yatay_parcalar/3_alt_parca.png" alt="3. Parça">
+        <div class="asset-title">3. Parça (Alt)</div>
+        <div class="asset-desc">Alt konumlandırma desenini ve veri sonunu barındırır.</div>
+        <a href="yatay_parcalar/3_alt_parca.png" download class="asset-link">⬇️ İndir (PNG)</a>
+      </div>
+    </div>
+
+    <!-- Hazır Sürpriz Kartları -->
+    <h3 class="section-heading no-print">💌 Romantik Hazır Kartlar</h3>
+    <div class="grid-3 no-print">
+      <div class="asset-card">
+        <img src="kartlar/kart_1.png" alt="1. Kart">
+        <div class="asset-title">1. İpucu Kartı</div>
+        <div class="asset-desc">Özel çerçeveli ve kesim rehberli 1. parça.</div>
+        <a href="kartlar/kart_1.png" download class="asset-link">⬇️ Kartı İndir</a>
+      </div>
+
+      <div class="asset-card">
+        <img src="kartlar/kart_2.png" alt="2. Kart">
+        <div class="asset-title">2. İpucu Kartı</div>
+        <div class="asset-desc">Özel çerçeveli ve kesim rehberli 2. parça.</div>
+        <a href="kartlar/kart_2.png" download class="asset-link">⬇️ Kartı İndir</a>
+      </div>
+
+      <div class="asset-card">
+        <img src="kartlar/kart_3.png" alt="3. Kart">
+        <div class="asset-title">3. İpucu Kartı</div>
+        <div class="asset-desc">Özel çerçeveli ve kesim rehberli 3. parça.</div>
+        <a href="kartlar/kart_3.png" download class="asset-link">⬇️ Kartı İndir</a>
+      </div>
+    </div>
+
+    <!-- Dikey Parçalar Seçeneği -->
+    <h3 class="section-heading no-print">📐 Dikey 3 Parça Alternatifi (Sol, Orta, Sağ)</h3>
+    <div class="grid-3 no-print">
+      <div class="asset-card">
+        <img src="dikey_parcalar/1_sol_parca.png" alt="1. Sol Parça">
+        <div class="asset-title">1. Parça (Sol)</div>
+        <div class="asset-desc">Dikey kesim sol sütun parçası.</div>
+        <a href="dikey_parcalar/1_sol_parca.png" download class="asset-link">⬇️ İndir (PNG)</a>
+      </div>
+
+      <div class="asset-card">
+        <img src="dikey_parcalar/2_orta_parca.png" alt="2. Orta Parça">
+        <div class="asset-title">2. Parça (Orta)</div>
+        <div class="asset-desc">Dikey kesim orta sütun parçası.</div>
+        <a href="dikey_parcalar/2_orta_parca.png" download class="asset-link">⬇️ İndir (PNG)</a>
+      </div>
+
+      <div class="asset-card">
+        <img src="dikey_parcalar/3_sag_parca.png" alt="3. Sağ Parça">
+        <div class="asset-title">3. Parça (Sağ)</div>
+        <div class="asset-desc">Dikey kesim sağ sütun parçası.</div>
+        <a href="dikey_parcalar/3_sag_parca.png" download class="asset-link">⬇️ İndir (PNG)</a>
+      </div>
+    </div>
+
+    <!-- Sürpriz & Oyun Fikirleri -->
+    <div class="ideas-box no-print">
+      <h3>🎉 Sürpriz ve Hazine Avı Nasıl Oynanır?</h3>
+
+      <div class="idea-step">
+        <div class="idea-num">1</div>
+        <div class="idea-text">
+          <strong>1. Parçayı Sabah Verin veya Gizleyin</strong>
+          <p>Sabah kahvaltısının yanına bir zarf içinde bırakabilir veya "Bugün küçük bir ipucu oyunu oynuyoruz..." notuyla verebilirsiniz.</p>
+        </div>
+      </div>
+
+      <div class="idea-step">
+        <div class="idea-num">2</div>
+        <div class="idea-text">
+          <strong>2. Parçayı Gün İçinde Sürpriz Yapın</strong>
+          <p>Çantasına, arabasına veya gün içinde hediye ettiğiniz bir çiçeğin/çikolatanın içine iliştirin.</p>
+        </div>
+      </div>
+
+      <div class="idea-step">
+        <div class="idea-num">3</div>
+        <div class="idea-text">
+          <strong>3. Parçayı Akşam Buluşmasında Verin & Taratın!</strong>
+          <p>Akşam romantik akşam yemeğinde son parçayı verin: "Üç parçayı yan yana birleştir ve telefonunun kamerasını aç." Web siteniz açıldığında müzik ve anılarınız onu büyüleyecek!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Printable Layout (A4 formatı) -->
+    <div class="print-only print-page">
+      <h2>❤️ BİZİM YILDÖNÜMÜ BULMACAMIZ ❤️</h2>
+      <p>Aşağıdaki 3 parçayı kesik çizgilerden (✂️) makasla kesin. 3 parça tam hizalı birleştirildiğinde telefon kamerasıyla web sitemiz açılacaktır!</p>
+
+      <div class="cut-line"><span>✂ Kesim Çizgisi</span><span>1. PARÇA (ÜST)</span><span>✂</span></div>
+      <div class="print-piece-box">
+        <img src="yatay_parcalar/1_ust_parca.png" alt="1. Parça">
+      </div>
+
+      <div class="cut-line"><span>✂ Kesim Çizgisi</span><span>2. PARÇA (ORTA)</span><span>✂</span></div>
+      <div class="print-piece-box">
+        <img src="yatay_parcalar/2_orta_parca.png" alt="2. Parça">
+      </div>
+
+      <div class="cut-line"><span>✂ Kesim Çizgisi</span><span>3. PARÇA (ALT)</span><span>✂</span></div>
+      <div class="print-piece-box">
+        <img src="yatay_parcalar/3_alt_parca.png" alt="3. Parça">
+      </div>
+      <div class="cut-line"><span>✂ Bitiş Çizgisi</span><span>https://yildonumu-iota.vercel.app/</span><span>✂</span></div>
+    </div>
+
+  </div>
+
+  <script>
+    let isJoined = false;
+    function togglePuzzle() {
+      const wrapper = document.getElementById('puzzleWrapper');
+      const btn = document.getElementById('toggleBtn');
+      const tip = document.getElementById('scanTip');
+
+      isJoined = !isJoined;
+      if (isJoined) {
+        wrapper.classList.remove('separated');
+        wrapper.classList.add('joined');
+        btn.textContent = '🔓 Parçaları Tekrar Ayır';
+        tip.innerHTML = '🎉 <strong>Mükemmel!</strong> Parçalar birleşti. Şimdi telefonunuzun kamerasını QR koda doğrultup tarayabilirsiniz!';
+        tip.style.background = 'rgba(34, 197, 94, 0.15)';
+        tip.style.borderColor = 'rgba(34, 197, 94, 0.4)';
+        tip.style.color = '#86efac';
+      } else {
+        wrapper.classList.remove('joined');
+        wrapper.classList.add('separated');
+        btn.textContent = '✨ Parçaları Birleştir (Test Et)';
+        tip.innerHTML = '💡 İpucu: Şu an parçalar ayrık (tek tek taranamayacak haldedir). Butona basarak birleştirin.';
+        tip.style.background = 'rgba(252, 211, 77, 0.1)';
+        tip.style.borderColor = 'rgba(252, 211, 77, 0.25)';
+        tip.style.color = '#fcd34d';
+      }
+    }
+  </script>
+</body>
+</html>
