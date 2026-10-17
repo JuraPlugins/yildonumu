@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özel Yıldönümü Davetiyesi | 25 Ekim Alanya Kaçamağımız</title>
+    <meta name="description" content="Aşkımızın yeni yaşı için hazırlanan rüya gibi 2 günlük Alanya yıldönümü davetiyesi ve gezi rehberi.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Subtle Golden Dust Floating Canvas -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- Top Navigation Controls -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <span class="brand-icon">❤️</span>
+            <span class="brand-title">Bizim Yıldönümümüz</span>
+        </div>
+        <div class="nav-actions">
+            <!-- View Mode Switcher -->
+            <button id="viewToggleBtn" class="btn-view-toggle" title="Görünüm Değiştir">
+                <span id="viewToggleIconWrap"><i data-lucide="calendar"></i></span>
+                <span id="viewToggleText">Tüm Programı Gör</span>
+            </button>
+            <!-- Audio Ambient Music Button -->
+            <button id="audioToggleBtn" class="btn-icon-nav" title="Romantik Melodi & Akdeniz Dalgası">
+                <span id="audioToggleIconWrap"><i data-lucide="music"></i></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         0. PSİKOLOJİ ÖĞRENCİSİNE ÖZEL AKIL OYUNU & VAKA DOSYASI (PUZZLE SCREEN)
+         ========================================================================= -->
+    <div id="puzzleScreen">
+        <div class="case-file-wrapper">
+            <!-- Header File Stamp -->
+            <div class="case-file-header">
+                <div class="case-badge"><i data-lucide="brain"></i> KLİNİK VAKA NO: #2510-ALANYA</div>
+                <div class="case-classified-stamp font-heading">ÇOK GİZLİ REÇETE</div>
+            </div>
+
+            <!-- Patient / Case Details Card -->
+            <div class="patient-card">
+                <div class="patient-row">
+                    <span class="patient-label">DANIŞAN:</span>
+                    <span class="patient-value">Kalbi Sana Emanet Biri ❤️</span>
+                </div>
+                <div class="patient-row">
+                    <span class="patient-label">UZMAN PSİKOLOG:</span>
+                    <span class="patient-value">Geleceğin En Harika Psikoloğu (Sen) 🎓</span>
+                </div>
+                <div class="patient-row">
+                    <span class="patient-label">SEMPTOMLAR:</span>
+                    <span class="patient-value">Sürekli tebessüm, yüksek nabız, 25 Ekim'i iple çekme sendromu.</span>
+                </div>
+                <div class="patient-row">
+                    <span class="patient-label">GÖREVİN:</span>
+                    <span class="patient-value" style="color: var(--gold-light);">Gizli reçete kilidini açmak için 3 psikolojik soruyu doğru teşhis et!</span>
+                </div>
+            </div>
+
+            <!-- Puzzle Progress Indicator -->
+            <div class="puzzle-progress-wrap">
+                <div class="puzzle-progress-bar">
+                    <div class="puzzle-progress-fill" id="puzzleProgressFill"></div>
+                </div>
+                <span class="puzzle-step-text" id="puzzleStepText">Aşama 1 / 3: Nörobiyolojik Test</span>
+            </div>
+
+            <!-- QUESTION 1: BİYOLOJİK PSİKOLOJİ -->
+            <div class="puzzle-question active" id="pQuestion1" data-step="1">
+                <span class="question-tag"><i data-lucide="dna"></i> Soru 1 • Biyolojik Psikoloji</span>
+                <h3 class="question-title font-serif">Danışan sana her sarıldığında ve gözlerine baktığında beyninde kontrolsüzce tavan yapan 'güven ve aşk' hormonu hangisidir?</h3>
+                <div class="puzzle-options-grid">
+                    <button class="btn-option" data-correct="false" data-msg="Kortizol stres hormonudur! Senin yanında sadece huzur var, tekrar dene! 😉">
+                        <span class="opt-letter">A</span> Kortizol
+                    </button>
+                    <button class="btn-option" data-correct="true">
+                        <span class="opt-letter">B</span> Oksitosin & Dopamin
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="Melatonin uyku getirir! Seninleyken gözlerimin içi parlıyor, tekrar dene!">
+                        <span class="opt-letter">C</span> Melatonin
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="GABA sakinleştirir ama aşkın kimyası bu değil sayın psikoloğum!">
+                        <span class="opt-letter">D</span> GABA
+                    </button>
+                </div>
+                <div class="puzzle-feedback" id="feedback1"></div>
+            </div>
+
+            <!-- QUESTION 2: KLASİK KOŞULLANMA -->
+            <div class="puzzle-question" id="pQuestion2" data-step="2">
+                <span class="question-tag"><i data-lucide="bell"></i> Soru 2 • Davranışsal Psikoloji (Pavlov)</span>
+                <h3 class="question-title font-serif">Pavlov'un deneyinde zil sesi salyayı tetiklerdi. Peki danışanın senin sesini her duyduğunda yaşadığı istemsiz kalp çarpıntısı ve mutluluk neyle açıklanır?</h3>
+                <div class="puzzle-options-grid">
+                    <button class="btn-option" data-correct="false" data-msg="Sistematik duyarsızlaşma alışmayı anlatır, danışanın heyecanı her gün artıyor!">
+                        <span class="opt-letter">A</span> Sistematik Duyarsızlaşma
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="Bilişsel çelişki yok, danışan seni sevdiğinden %100 emin!">
+                        <span class="opt-letter">B</span> Bilişsel Çelişki
+                    </button>
+                    <button class="btn-option" data-correct="true">
+                        <span class="opt-letter">C</span> Koşullu Aşk Refleksi (Sesin = Mutluluk)
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="Öğrenilmiş çaresizlik mi? Asla! Bu aşkta sadece umut var!">
+                        <span class="opt-letter">D</span> Öğrenilmiş Çaresizlik
+                    </button>
+                </div>
+                <div class="puzzle-feedback" id="feedback2"></div>
+            </div>
+
+            <!-- QUESTION 3: MASLOW & TEDAVİ PLANI -->
+            <div class="puzzle-question" id="pQuestion3" data-step="3">
+                <span class="question-tag"><i data-lucide="award"></i> Soru 3 • Nihai Tedavi & Teşhis</span>
+                <h3 class="question-title font-serif">Maslow'un Hiyerarşisi'nin zirvesinde 'Kendini Gerçekleştirme' vardır. Ancak danışanın kalbindeki en acil ve nihai ihtiyaç nedir?</h3>
+                <div class="puzzle-options-grid">
+                    <button class="btn-option" data-correct="true">
+                        <span class="opt-letter">A</span> 25 Ekim'de Alanya'da Seninle 2 Günlük Baş Başa Kaçamak!
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="Kütüphanede vize çalışmak mı? Danışanın buna kalbi dayanmaz!">
+                        <span class="opt-letter">B</span> Kütüphanede 48 Saat DSM-5 Ezberlemek
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="Evde oturup makale taraması yapmak bu kalbe iyi gelmez!">
+                        <span class="opt-letter">C</span> Hafta Sonu Evde Kalıp Psikanaliz Makalesi Okumak
+                    </button>
+                    <button class="btn-option" data-correct="false" data-msg="Sadece kahve yetmez, Akdeniz meltemi şart!">
+                        <span class="opt-letter">D</span> Merkezde Sıradan Bir Kahve Molası
+                    </button>
+                </div>
+                <div class="puzzle-feedback" id="feedback3"></div>
+            </div>
+
+            <!-- SUCCESS UNLOCK BANNER -->
+            <div class="puzzle-success-banner" id="puzzleSuccessBanner">
+                <div class="success-icon">🔓✨</div>
+                <h3 class="font-serif" style="color: #fff; font-size: 1.6rem; margin-bottom: 8px;">MÜKEMMEL TEŞHİS SAYIN PSİKOLOĞUM!</h3>
+                <p style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 18px;">
+                    Bilişsel uyum testinden %100 ile geçtiniz. Danışanın gizli reçetesi ve yıldönümü davetiyesi açılıyor...
+                </p>
+                <button class="btn-decision btn-decision-gold" id="btnUnlockEnvelope" style="margin: 0 auto;">
+                    <span>Reçeteyi & Davetiyeyi Aç 💌</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         1. LÜKS AÇILIŞ ZARFI (MÜHÜRLÜ DAVETİYE EKRANI)
+         ========================================================================= -->
+    <div id="envelopeScreen">
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope">
+                <div class="envelope-gold-ribbon"></div>
+                <div class="wax-seal">
+                    <span class="seal-icon">💌</span>
+                    <span class="seal-text">25 EKİM</span>
+                </div>
+                <div class="envelope-tag">
+                    <p class="envelope-subtitle font-heading">Sana Özel Bir Davet</p>
+                    <h1 class="envelope-heading font-serif">Aşkımızın Yeni Yaşına...</h1>
+                </div>
+            </div>
+        </div>
+
+        <p class="envelope-hint">
+            <i data-lucide="sparkles"></i> Mektubu açmak için tıkla ya da aşağıdaki butona bas
+        </p>
+
+        <button id="openEnvelopeBtn" class="btn-open-envelope font-heading">
+            <span>Davetiyeyi Aç</span>
+            <i data-lucide="heart" style="color: #ff4d6d; fill: #ff4d6d;"></i>
+        </button>
+    </div>
+
+    <!-- =========================================================================
+         2. SİNEMATİK ANİMASYONLU SLAYT GÖSTERİSİ (STORY / PRESENTATION MODE)
+         ========================================================================= -->
+    <main id="sliderView">
+        <!-- Story-style Progress Bars -->
+        <div class="story-progress-container" id="storyProgressBars">
+            <!-- Dynamically populated by app.js -->
+        </div>
+
+        <!-- Slides Wrapper -->
+        <div class="slides-container" id="slidesWrapper">
+
+            <!-- SLIDE 1: ROMANTİK GİRİŞ & GERİ SAYIM -->
+            <section class="slide-item active" data-index="0">
+                <div class="slide-bg" style="background-image: url('assets/images/sunset_castle.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="heart"></i> Özel Davet • 25 Ekim
+                    </span>
+                    <h2 class="slide-title font-serif">Aşkımızın Yeni Yaşını Birlikte Kutlayalım</h2>
+                    <p class="slide-subtitle">Akdeniz'in kalbinde, sadece ikimize ait unutulmaz 2 gün...</p>
+                    <p class="slide-description">
+                        Seninle geçen her an hayatımın en güzel hediyesi. Bu yıldönümümüzde tarihin, masmavi Akdeniz dalgalarının ve 5 yıldızlı huzurun buluştuğu Alanya'da baş başa masalsı bir kaçamağa davetlisin.
+                    </p>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="countdown-container" id="countdownTimer">
+                        <div class="countdown-box">
+                            <div class="countdown-val" id="countDays">00</div>
+                            <div class="countdown-label">GÜN</div>
+                        </div>
+                        <div class="countdown-box">
+                            <div class="countdown-val" id="countHours">00</div>
+                            <div class="countdown-label">SAAT</div>
+                        </div>
+                        <div class="countdown-box">
+                            <div class="countdown-val" id="countMinutes">00</div>
+                            <div class="countdown-label">DAKİKA</div>
+                        </div>
+                        <div class="countdown-box">
+                            <div class="countdown-val" id="countSeconds">00</div>
+                            <div class="countdown-label">SANİYE</div>
+                        </div>
+                    </div>
+
+                    <div class="features-tags">
+                        <span class="feature-pill"><i data-lucide="sparkles"></i> 2 Günlük Özel Rota</span>
+                        <span class="feature-pill"><i data-lucide="wine"></i> Her Şey Dahil Konsept</span>
+                        <span class="feature-pill"><i data-lucide="sun"></i> Masmavi Akdeniz</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: 25 EKİM HER ŞEY DAHİL OTEL KONAKLAMASI -->
+            <section class="slide-item" data-index="1">
+                <div class="slide-bg" style="background-image: url('assets/images/luxury_hotel.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="hotel"></i> 25 Ekim Konaklama
+                    </span>
+                    <h2 class="slide-title font-serif">5 Yıldızlı Her Şey Dahil Kaçamak</h2>
+                    <p class="slide-subtitle">Sonsuzluk havuzunda şampanya & Akdeniz esintisi</p>
+                    <p class="slide-description">
+                        Gün boyu dilediğimizce dinlenebileceğimiz, Akdeniz'e sıfır lüks odamızda yıldönümümüzü kutlayacağız. Sınırsız gastronomi lezzetleri, gün batımına karşı soğutulmuş şampanya ve baş başa romantik bir atmosfer bizi bekliyor.
+                    </p>
+
+                    <div class="schedule-grid">
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">Özel Karşılama</span>
+                            <h4 class="mini-title">Şampanya & Çiçekler</h4>
+                            <p class="mini-desc">Odamızda bizi bekleyen soğuk kadehler ve romantik ikramlar.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">Tüm Gün</span>
+                            <h4 class="mini-title">Sonsuzluk Havuzu & Sahil</h4>
+                            <p class="mini-desc">Palmiyelerin altında, dalga sesleri eşliğinde huzur dolu anlar.</p>
+                        </div>
+                    </div>
+
+                    <div class="features-tags">
+                        <span class="feature-pill"><i data-lucide="check-circle-2"></i> Ultra All Inclusive</span>
+                        <span class="feature-pill"><i data-lucide="check-circle-2"></i> Deniz Manzaralı Oda</span>
+                        <span class="feature-pill"><i data-lucide="check-circle-2"></i> Spa & Masaj İmkanı</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: 1. GÜN SABAH - TARİHİ YARIMADA & PANORAMA -->
+            <section class="slide-item" data-index="2">
+                <div class="slide-bg" style="background-image: url('assets/images/teleferik_cleopatra.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="sunrise"></i> 1. Gün • Sabah
+                    </span>
+                    <h2 class="slide-title font-serif">Tarihi Yarımada & Zirve Panoraması</h2>
+                    <p class="slide-subtitle">Damlataş'tan Alanya Kalesi'ne uzanan büyülü yükseliş</p>
+                    
+                    <div class="schedule-grid">
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">09:00</span>
+                            <h4 class="mini-title">Damlataş Mağarası & Yürüyüş</h4>
+                            <p class="mini-desc">Binlerce yıllık sarkıt ve dikitler, mağaranın şifalı mikro-klima havası ve güne enerjik bir başlangıç.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">10:00</span>
+                            <h4 class="mini-title">Teleferik ile Kale'ye Çıkış</h4>
+                            <p class="mini-desc">Damlataş'tan Ehmedek'e teleferikle süzülürken Kleopatra Plajı ve turkuaz Akdeniz ayaklarımızın altında.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">10:30</span>
+                            <h4 class="mini-title">Alanya Kalesi & İçkale</h4>
+                            <p class="mini-desc">Süleymaniye Camii ve tarihi surlar arasında el ele yürüyüş, eşsiz panoramik fotoğraflar.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: 1. GÜN ÖĞLE - LİMAN & TARİH -->
+            <section class="slide-item" data-index="3">
+                <div class="slide-bg" style="background-image: url('assets/images/harbor_kizilkule.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="sun"></i> 1. Gün • Öğle
+                    </span>
+                    <h2 class="slide-title font-serif">Liman, Kızılkule & Tarihi Tersane</h2>
+                    <p class="slide-subtitle">Tarihi sokaklar ve denizin üzerindeki ahşap patika</p>
+
+                    <div class="schedule-grid">
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">12:30</span>
+                            <h4 class="mini-title">Tarihi Evler & Kahve Molası</h4>
+                            <p class="mini-desc">Kaleden aşağıya inerken sur içi sokaklarındaki geleneksel Alanya evleri arasında otantik bir Türk kahvesi molası.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">13:30</span>
+                            <h4 class="mini-title">Kızılkule & Alanya Tersanesi</h4>
+                            <p class="mini-desc">Alanya'nın simgesi görkemli Kızılkule ve sur kenarındaki ahşap yürüyüş yolunda denizin üzerindeki patikayı adımlama.</p>
+                        </div>
+                    </div>
+
+                    <div class="features-tags">
+                        <span class="feature-pill"><i data-lucide="coffee"></i> Geleneksel Kahve Keyfi</span>
+                        <span class="feature-pill"><i data-lucide="compass"></i> Selçuklu Deniz Mimarisi</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: 1. GÜN ÖĞLEDEN SONRA - DENİZ & MÜZE -->
+            <section class="slide-item" data-index="4">
+                <div class="slide-bg" style="background-image: url('assets/images/teleferik_cleopatra.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="waves"></i> 1. Gün • Öğleden Sonra
+                    </span>
+                    <h2 class="slide-title font-serif">Turkuaz Sular & Kültür Durağı</h2>
+                    <p class="slide-subtitle">Kleopatra'nın altın kumlarında serinleme zamanı</p>
+
+                    <div class="schedule-grid">
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">15:00</span>
+                            <h4 class="mini-title">Kleopatra veya Damlataş Plajı</h4>
+                            <p class="mini-desc">İncecik altın kumu ve cam gibi berrak deniziyle kısa bir yüzme molası, günün tüm yorgunluğunu unutturacak.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">17:00</span>
+                            <h4 class="mini-title">Alanya Arkeoloji Müzesi</h4>
+                            <p class="mini-desc">(İsteğe Bağlı) Plajdan sonra merkeze kısa yürüyüşle ünlü Herakles Heykeli ve antik zenginlikleri ziyaret.</p>
+                        </div>
+                    </div>
+
+                    <div class="features-tags">
+                        <span class="feature-pill"><i data-lucide="sparkles"></i> Altın Kumsal</span>
+                        <span class="feature-pill"><i data-lucide="shield"></i> Tarihi Herakles Heykeli</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: 1. GÜN AKŞAM - SEYİR TERASI & LİMAN IŞIKLARI -->
+            <section class="slide-item" data-index="5">
+                <div class="slide-bg" style="background-image: url('assets/images/sunset_castle.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="moon"></i> 1. Gün • Akşam
+                    </span>
+                    <h2 class="slide-title font-serif">Işıklar Altında Alanya & Gün Batımı</h2>
+                    <p class="slide-subtitle">Gökyüzünün altın ve mora büründüğü o büyülü an</p>
+
+                    <div class="schedule-grid">
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">19:00</span>
+                            <h4 class="mini-title">Alanya Seyir Terası'nda Gün Batımı</h4>
+                            <p class="mini-desc">Merkeze yakın seyir terasından Akdeniz'e batan güneşi, ışıl ışıl parıldayan Alanya Kalesi'ni izleme.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">20:30</span>
+                            <h4 class="mini-title">Liman & Çarşı Yürüyüşü</h4>
+                            <p class="mini-desc">Akşam yemeği sonrası Alanya Limanı ve İskele Caddesi boyunca hareketli çarşıda yürüyüş, hatıra alışverişi.</p>
+                        </div>
+                    </div>
+
+                    <div class="features-tags">
+                        <span class="feature-pill"><i data-lucide="camera"></i> Romantik Gün Batımı</span>
+                        <span class="feature-pill"><i data-lucide="shopping-bag"></i> İskele Caddesi Çarşısı</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: 2. GÜN & ALTERNATİF ROTALAR: DİM ÇAYI & MAĞARALAR -->
+            <section class="slide-item" data-index="6">
+                <div class="slide-bg" style="background-image: url('assets/images/dim_boat.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <span class="slide-badge">
+                        <i data-lucide="compass"></i> 2. Gün • Gizli Rotalar
+                    </span>
+                    <h2 class="slide-title font-serif">Dim Çayı Serinliği & Deniz Mağaraları</h2>
+                    <p class="slide-subtitle">Doğanın kucağında ferahlık ve Akdeniz'in gizemli suları</p>
+
+                    <div class="schedule-grid">
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">Doğa & Serinlik</span>
+                            <h4 class="mini-title">Dim Çayı Üzerinde Çardak Keyfi</h4>
+                            <p class="mini-desc">Merkezden 15 km uzaklıkta, buz gibi nehir suyunun tam üstündeki geleneksel çardaklarda doğanın kalbinde dinlenme.</p>
+                        </div>
+                        <div class="schedule-card-mini">
+                            <span class="mini-time">Mavi Macera</span>
+                            <h4 class="mini-title">Kısa Tekne Turu & Mağaralar</h4>
+                            <p class="mini-desc">Limandan 1-2 saatlik romantik tekne turu: Korsanlar Mağarası, Aşıklar Mağarası ve parıldayan Fosforlu Mağara keşfi.</p>
+                        </div>
+                    </div>
+
+                    <div class="features-tags">
+                        <span class="feature-pill"><i data-lucide="wind"></i> Buz Gibi Dim Çayı</span>
+                        <span class="feature-pill"><i data-lucide="anchor"></i> Aşıklar & Fosforlu Mağara</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: BÜYÜK FİNAL & AŞK SÖZÜ (BENİMLE GELİR MİSİN?) -->
+            <section class="slide-item" data-index="7">
+                <div class="slide-bg" style="background-image: url('assets/images/romantic_dinner.jpg');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-card">
+                    <div class="final-decision-box">
+                        <span class="slide-badge">
+                            <i data-lucide="heart" style="color: #ff4d6d; fill: #ff4d6d;"></i> Aşkımızın Yıldönümü
+                        </span>
+                        <h2 class="slide-title font-serif">Benimle Bu Yolculuğa Var mısın?</h2>
+                        <p class="slide-subtitle">"Seninle her an bir ömre bedel..."</p>
+                        <p class="slide-description" style="max-width: 620px; margin: 0 auto 20px auto;">
+                            25 Ekim'de başlayacak bu 2 günlük masalda; Alanya'nın tarihi surlarında, masmavi denizinde ve mum ışığında kutlayacağımız yıldönümümüzde elimin elinde olmasına ne dersin?
+                        </p>
+
+                        <div class="final-decision-btns">
+                            <button class="btn-decision btn-decision-primary" id="btnAcceptYes">
+                                <i data-lucide="heart" style="fill: #fff;"></i>
+                                <span>Evet, Seve Seve! ❤️</span>
+                            </button>
+                            <button class="btn-decision btn-decision-gold" id="btnAcceptAlways">
+                                <i data-lucide="sparkles"></i>
+                                <span>Bin Kere Evet! 💍</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Arrows Navigation -->
+        <button class="slide-nav-btn slide-prev" id="prevSlideBtn" aria-label="Önceki Slayt">
+            <i data-lucide="chevron-left"></i>
+        </button>
+        <button class="slide-nav-btn slide-next" id="nextSlideBtn" aria-label="Sonraki Slayt">
+            <i data-lucide="chevron-right"></i>
+        </button>
+
+        <!-- Bottom Controller Bar -->
+        <div class="slide-bottom-bar">
+            <button class="btn-ctrl" id="autoPlayToggleBtn">
+                <i data-lucide="pause" id="autoPlayIcon"></i>
+                <span id="autoPlayText">Duraklat</span>
+            </button>
+            <span class="btn-ctrl" style="cursor: default;" id="slideIndicator">1 / 8</span>
+        </div>
+    </main>
+
+    <!-- =========================================================================
+         3. DİKEY REHBER & TAM ZAMAN ÇİZELGESİ (TIMELINE BROCHURE MODE)
+         ========================================================================= -->
+    <main id="timelineView">
+        <div class="timeline-hero">
+            <span class="slide-badge"><i data-lucide="map-pin"></i> 25 Ekim Alanya Kaçamağı</span>
+            <h2 class="timeline-hero-title font-serif">2 Günlük Yıldönümü Programımız</h2>
+            <p class="timeline-hero-desc">
+                Tüm detaylarıyla özenle planlanan saat saat gezi rotamız, konaklama detaylarımız ve tatil tavsiyelerimiz.
+            </p>
+        </div>
+
+        <!-- 25 EKİM KONAKLAMA BÖLÜMÜ -->
+        <div class="info-card" style="margin-bottom: 40px; border-color: var(--border-gold);">
+            <div class="info-card-header">
+                <i data-lucide="hotel" class="info-card-icon" style="color: var(--gold);"></i>
+                <div>
+                    <h3 class="font-serif" style="font-size: 1.5rem; color: #fff;">25 Ekim • 5 Yıldızlı Her Şey Dahil Otel</h3>
+                    <p style="color: var(--gold-light); font-size: 0.9rem;">Lüks Konaklama & Özel Yıldönümü Karşılaması</p>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+                Akdeniz'in masmavi denizine sıfır konumda, gün batımı manzaralı lüks odamız, sonsuzluk havuzunda şampanya ikramı ve sınırsız gastronomi büfesi ile tatilimiz boyunca eksiksiz konfor sunacak.
+            </p>
+            <div class="features-tags">
+                <span class="feature-pill"><i data-lucide="check"></i> Ultra Her Şey Dahil</span>
+                <span class="feature-pill"><i data-lucide="check"></i> Deniz Manzaralı Süit</span>
+                <span class="feature-pill"><i data-lucide="check"></i> Spa & Masaj</span>
+                <span class="feature-pill"><i data-lucide="check"></i> Odaya Özel Şampanya & Meyve Sepeti</span>
+            </div>
+        </div>
+
+        <!-- 1. GÜN BAŞLIĞI -->
+        <div class="timeline-section-title">
+            <i data-lucide="sun" style="color: var(--gold);"></i>
+            <span class="section-tag font-serif">1. Gün Gezi & Keşif Rotası</span>
+        </div>
+
+        <div class="timeline-list">
+            <!-- 09:00 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">09:00</span>
+                        <span class="timeline-category">Sabah • Doğa & Tarih</span>
+                    </div>
+                    <h4 class="timeline-card-title">Damlataş Mağarası & Yürüyüş</h4>
+                    <p class="timeline-card-desc">
+                        Güne merkezin simgelerinden Damlataş Mağarası ile başlayın. İçerideki binlerce yıllık sarkıt ve dikitleri inceleyip mağaranın mikro-klima havasını soluyabilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 10:00 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">10:00</span>
+                        <span class="timeline-category">Sabah • Panorama</span>
+                    </div>
+                    <h4 class="timeline-card-title">Alanya Teleferik ile Kale’ye Çıkış</h4>
+                    <p class="timeline-card-desc">
+                        Mağaranın hemen yanından kalkan Alanya Teleferik'e binerek Ehmedek bölgesine yükselin. Yolculuk boyunca Kleopatra Plajı ve Akdeniz manzarasını izleyebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 10:30 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">10:30</span>
+                        <span class="timeline-category">Sabah • Tarihi Doku</span>
+                    </div>
+                    <h4 class="timeline-card-title">Alanya Kalesi & İçkale</h4>
+                    <p class="timeline-card-desc">
+                        Alanya Kalesi, Süleymaniye Camii ve İçkale bölgesini yürüyerek gezin. Tarih dokusunu hissedip surlardan panaromik fotoğraflar çekebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 12:30 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">12:30</span>
+                        <span class="timeline-category">Öğle • Lezzet & Mola</span>
+                    </div>
+                    <h4 class="timeline-card-title">Tarihi Evler & Kale İçi Kahve Molası</h4>
+                    <p class="timeline-card-desc">
+                        Kaleden aşağıya doğru inerken ya da sur içi sokaklarında geleneksel Alanya evlerinin arasında mola verebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 13:30 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">13:30</span>
+                        <span class="timeline-category">Öğle • Liman & Selçuklu</span>
+                    </div>
+                    <h4 class="timeline-card-title">Kızılkule & Alanya Tersanesi</h4>
+                    <p class="timeline-card-desc">
+                        Limana inip Alanya’nın simgesi Kızılkule'yi ve hemen yanındaki tarihi Alanya Tersanesi'ni yürüyerek keşfedin. Surların kenarındaki ahşap yürüyüş yolunda denizin üzerindeki patikayı takip edebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 15:00 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">15:00</span>
+                        <span class="timeline-category">Öğleden Sonra • Deniz Keyfi</span>
+                    </div>
+                    <h4 class="timeline-card-title">Kleopatra veya Damlataş Plajı</h4>
+                    <p class="timeline-card-desc">
+                        Merkezin en güzel yanı olan Kleopatra Plajı veya Damlataş Plajı'nda deniz keyfi yapın. İncecik kumu ve berrak deniziyle kısa bir yüzme molası günün yorgunluğunu alır.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 17:00 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">17:00</span>
+                        <span class="timeline-category">Öğleden Sonra • Kültür</span>
+                    </div>
+                    <h4 class="timeline-card-title">Alanya Arkeoloji Müzesi (İsteğe Bağlı)</h4>
+                    <p class="timeline-card-desc">
+                        Plajdan sonra merkeze yürüyüş mesafesindeki Alanya Arkeoloji Müzesi'ne uğrayıp ünlü Herakles Heykeli'ni ve bölgeden çıkarılan antik kalıntıları görebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 19:00 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">19:00</span>
+                        <span class="timeline-category">Akşam • Romantik Manzara</span>
+                    </div>
+                    <h4 class="timeline-card-title">Alanya Seyir Terası'nda Gün Batımı</h4>
+                    <p class="timeline-card-desc">
+                        Merkeze oldukça yakın konumda bulunan Alanya Seyir Terası'na çıkarak şehir ışıklarının ve Alanya Kalesi'nin gece manzarasını seyredebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 20:30 -->
+            <div class="timeline-node">
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="timeline-time-badge">20:30</span>
+                        <span class="timeline-category">Gece • Canlı Atmosfer</span>
+                    </div>
+                    <h4 class="timeline-card-title">Liman & Çarşı Yürüyüşü</h4>
+                    <p class="timeline-card-desc">
+                        Akşam yemeği sonrası Alanya Limanı ve İskele Caddesi boyundaki hareketli çarşıda yürüyüş yapıp hediyelik eşya alışverişi yapabilirsiniz.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. GÜN & ALTERNATİF PLANLAR BÖLÜMÜ -->
+        <div class="timeline-section-title">
+            <i data-lucide="compass" style="color: var(--gold);"></i>
+            <span class="section-tag font-serif">2. Gün & Alternatif / Ek Straip Öneriler</span>
+        </div>
+
+        <div class="schedule-grid" style="margin-bottom: 40px;">
+            <div class="info-card">
+                <span class="mini-time">Doğa & Serinlik İsteyenler İçin</span>
+                <h4 class="mini-title" style="font-size: 1.2rem; margin: 10px 0;">Dim Çayı Üzerinde Çardak Molası</h4>
+                <p class="mini-desc" style="font-size: 0.95rem; line-height: 1.6;">
+                    Eğer tarihten ziyade doğada serinlemek isterseniz, günü ortadan ikiye bölüp öğleden sonrayı merkezden yaklaşık 15-20 km uzaklıkta olan Dim Çayı üzerinde buz gibi suyun üzerindeki çardaklarda geçirebilirsiniz.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span class="mini-time">Denizden Kale Manzarası</span>
+                <h4 class="mini-title" style="font-size: 1.2rem; margin: 10px 0;">Kısa Tekne Turları</h4>
+                <p class="mini-desc" style="font-size: 0.95rem; line-height: 1.6;">
+                    Limandan kalkan 1-2 saatlik kısa tekne turlarıyla kale yarımadasının etrafındaki Korsanlar Mağarası, Aşıklar Mağarası ve Fosforlu Mağara'yı denizden görebilirsiniz.
+                </p>
+            </div>
+        </div>
+
+        <!-- YOLCULUK İPUÇLARI VE VALİZ LİSTESİ -->
+        <div class="info-panels-grid">
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i data-lucide="luggage" class="info-card-icon"></i>
+                    <div>
+                        <h4 class="font-serif" style="color: #fff; font-size: 1.2rem;">Valizimizde Ne Olmalı?</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Birlikte hazır olmamız gerekenler</p>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item1" checked>
+                    <label for="item1">Kleopatra plajı için mayo & güneş gözlüğü</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item2" checked>
+                    <label for="item2">Kale yürüyüşü için rahat spor ayakkabı</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item3" checked>
+                    <label for="item3">Yıldönümü akşam yemeği için en şık kombin</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item4" checked>
+                    <label for="item4">Unutulmaz anları çekmek için şarj aleti & kamera</label>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i data-lucide="cloud-sun" class="info-card-icon"></i>
+                    <div>
+                        <h4 class="font-serif" style="color: #fff; font-size: 1.2rem;">Hava Durumu & Atmosfer</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Alanya • 25 Ekim Dönemi</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">
+                    <div>
+                        <div style="font-size: 2.4rem; font-weight: 700; color: var(--gold-light);">26°C</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Güneşli & Ilık Akdeniz Havası</div>
+                    </div>
+                    <i data-lucide="sun" style="width: 50px; height: 50px; color: #ffb703;"></i>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 15px; line-height: 1.5;">
+                    Deniz suyu sıcaklığı yüzmek için son derece elverişli, akşamları hafif ılık meltem rüzgarı esmektedir.
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="btn-decision btn-decision-primary" id="timelineAcceptBtn" style="margin: 0 auto;">
+                <i data-lucide="heart" style="fill: #fff;"></i>
+                <span>Slayt Gösterisine Geri Dön</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- =========================================================================
+         4. KABUL VE SEVGİ MESAJI MODAL POPUP
+         ========================================================================= -->
+    <div id="lovePopup">
+        <div class="love-popup-card">
+            <button class="popup-close" id="popupCloseBtn">&times;</button>
+            <div class="popup-heart-icon">💖</div>
+            <h2 class="font-serif" style="font-size: 2rem; color: #fff; margin-bottom: 12px;">Birlikte Sonsuzluğa...</h2>
+            <p style="color: var(--gold-light); font-size: 1.1rem; margin-bottom: 20px; font-style: italic;">
+                "25 Ekim bizim günümüz olacak!"
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 26px;">
+                Cevabın kalbimi yeniden fethetti! Birlikte Alanya'nın eşsiz gün batımında kadeh kaldıracağımız, tarihin kucağında kaybolup yıldızların altında dans edeceğimiz bu gezi hayatımızın en güzel anılarından biri olacak. Seni çok seviyorum!
+            </p>
+            <button class="btn-decision btn-decision-gold" id="popupOkBtn" style="margin: 0 auto;">
+                <span>Sabırsızlıkla Bekliyorum! 🥂</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="confetti.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Lucide Icons Initialization
+        lucide.createIcons();
+    </script>
+</body>
+</html>
